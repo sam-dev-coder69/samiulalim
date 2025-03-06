@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Moon+Dance&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            color: #fff;
+            background: #0a0a0a;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .background-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.4);
+            z-index: 1;
+        }
+
+        .background-container video {
+            position: absolute;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            filter: brightness(1.2) contrast(1.1);
+        }
+
+        .content {
+            position: fixed;
+            opacity: 1;
+            visibility: visible;
+            padding-left: 100px;
+        }
+        .motivation-quote {
+            position: fixed;
+            top: 20px;
+            right: 40px;
+            font-family: "Dancing Script", cursive;
+            color: #64ffda;
+            font-size: 1.5em;
+            max-width: 300px;
+            text-align: right;
+            z-index: 100;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .glass-nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: #64ffda;
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            max-width: 800px;
+        }
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-family: "Big Shoulders Stencil Display", sans-serif;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .hero h2 {
+            font-size: 2em;
+            color: #64ffda;
+            margin-bottom: 30px;
+            font-family: "Moon Dance", cursive;
+        }
+        .hero p {
+            font-size: 1.2em;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            font-family: "Dancing Script", cursive;
+            font-size: 1.4em;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .cta-button {
+            padding: 15px 30px;
+            border: 2px solid #64ffda;
+            border-radius: 5px;
+            color: #64ffda;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .cta-button:hover {
+            background: #64ffda;
+            color: #0a0a0a;
+        }
+        .social-links {
+            position: fixed;
+            left: 40px;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            z-index: 101;
+        }
+        .social-links::after {
+            content: "";
+            width: 2px;
+            height: 90px;
+            background: #fff;
+            margin-top: 20px;
+        }
+        .social-links a {
+            color: #fff;
+            font-size: 1.5em;
+            transition: all 0.3s;
+        }
+        .social-links a:hover {
+            color: #64ffda;
+            transform: translateY(-3px) scale(1.2);
+        }
+        .email-link {
+            position: fixed;
+            right: 40px;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            writing-mode: vertical-rl;
+            z-index: 101;
+        }
+        .email-link a {
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            animation: floatUpDown 3s ease-in-out infinite;
+            display: inline-block;
+        }
+        @keyframes floatUpDown {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+        .email-link::after {
+            content: "";
+            width: 2px;
+            height: 90px;
+            background: #fff;
+            margin-top: 20px;
+        }
+        .email-link a:hover {
+            color: #64ffda;
+            transform: translateY(-3px);
+        }
+        .audio-controls {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 8px 15px;
+            border-radius: 25px;
+            z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            transition: bottom 0.3s ease-in-out;
+            scale: 0.85;
+        }
+        .audio-controls:hover,
+        .audio-controls.show {
+            bottom: 20px;
+        }
+        .hover-area {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            z-index: 99;
+        }
+        .hover-area:hover + .audio-controls {
+            bottom: 20px;
+        }
+        .audio-button {
+            background: none;
+            border: 1px solid #64ffda;
+            color: #64ffda;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s;
+            font-size: 0.9em;
+        }
+        .audio-button:hover {
+            background: #64ffda;
+            color: #0a0a0a;
+        }
+        .audio-button i {
+            font-size: 1em;
+        }
+        .volume-slider {
+            width: 60px;
+            height: 3px;
+            -webkit-appearance: none;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 1.5px;
+            outline: none;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: #64ffda;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3em;
+            }
+            .hero h2 {
+                font-size: 1.5em;
+            }
+            .social-links, .email-link {
+                display: none;
+            }
+            .glass-nav {
+                padding: 10px 20px;
+            }
+            .nav-links {
+                gap: 15px;
+            }
+            .nav-links a {
+                font-size: 0.9em;
+            }
+            .audio-controls {
+                bottom: -100px;
+                padding: 6px 12px;
+                scale: 0.8;
+            }
+            .hover-area {
+                height: 20px;
+            }
+            .audio-button {
+                padding: 5px 10px;
+                font-size: 0.8em;
+            }
+            .volume-slider {
+                width: 40px;
+            }
+            .content {
+                padding: 0 5%;
+            }
+            .hero p {
+                font-size: 1.2em;
+                max-width: 100%;
+            }
+            .motivation-quote {
+                font-size: 1.2em;
+                top: 15px;
+                right: 20px;
+                max-width: 200px;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                gap: 15px;
+                width: 100%;
+            }
+            .cta-button {
+                text-align: center;
+                padding: 12px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .hero h2 {
+                font-size: 1.3em;
+            }
+            .hero p {
+                font-size: 1.1em;
+                line-height: 1.4;
+                margin-bottom: 30px;
+            }
+            .content {
+                padding: 0 8%;
+            }
+            .motivation-quote {
+                font-size: 1em;
+                max-width: 150px;
+                top: 10px;
+                right: 15px;
+            }
+            .audio-controls {
+                scale: 0.7;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 90%;
+                max-width: 300px;
+            }
+            .glass-nav {
+                width: 90%;
+                max-width: 300px;
+                padding: 8px 15px;
+            }
+            .nav-links {
+                gap: 10px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .nav-links a {
+                font-size: 0.8em;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            .hero h2 {
+                font-size: 1.1em;
+            }
+            .hero p {
+                font-size: 1em;
+                margin-bottom: 25px;
+            }
+            .cta-button {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+            .motivation-quote {
+                font-size: 0.9em;
+                max-width: 120px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .hero h1 {
+                font-size: 4.5em;
+            }
+            .hero h2 {
+                font-size: 2.2em;
+            }
+            .hero p {
+                font-size: 1.5em;
+                max-width: 700px;
+            }
+        }
+
+        @media (min-height: 800px) {
+            .social-links::after {
+                height: 120px;
+            }
+            .email-link::after {
+                height: 120px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .hero h1 {
+                font-size: 2.8em;
+                margin-bottom: 10px;
+            }
+            .hero h2 {
+                font-size: 1.5em;
+                margin-bottom: 15px;
+            }
+            .hero p {
+                margin-bottom: 20px;
+                line-height: 1.4;
+            }
+            .social-links {
+                gap: 15px;
+            }
+            .social-links::after {
+                height: 60px;
+            }
+            .email-link::after {
+                height: 60px;
+            }
+        }
+
+        /* Fix for mobile devices in landscape mode */
+        @media (max-height: 450px) and (orientation: landscape) {
+            body {
+                overflow-y: auto;
+            }
+            .hero {
+                padding: 60px 0;
+                height: auto;
+                min-height: 100vh;
+            }
+            .social-links, .email-link {
+                position: static;
+                flex-direction: row;
+                padding: 20px 0;
+                justify-content: center;
+            }
+            .social-links::after, .email-link::after {
+                display: none;
+            }
+            .email-link {
+                writing-mode: horizontal-tb;
+            }
+            .content {
+                height: auto;
+                min-height: 100vh;
+            }
+        }
+
+        .page-section {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            z-index: 2;
+            overflow-y: auto;
+        }
+
+        .page-section.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .work-section {
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 100px 5% 50px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .projects-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            width: 100%;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            background: rgba(100, 255, 218, 0.05);
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-image:empty::after {
+            content: 'No Image Available';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #64ffda;
+            font-size: 0.9em;
+            text-align: center;
+            width: 100%;
+        }
+
+        .project-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-content h3 {
+            color: #64ffda;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+        }
+
+        .project-content p {
+            color: #ccc;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .project-tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .project-tech-stack span {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.75em;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .projects-container {
+                padding: 20px;
+            }
+            
+            .projects-grid {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .projects-container {
+                padding: 15px;
+                width: 95%;
+            }
+            
+            .project-image {
+                height: 180px;
+            }
+        }
+
+        .page-transition {
+            transform: translateY(100%);
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .page-transition.active {
+            transform: translateY(0);
+        }
+
+        .close-section {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 10;
+        }
+
+        .close-section i {
+            color: #64ffda;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+        }
+
+        .close-section:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: rotate(90deg);
+        }
+
+        .section-title {
+            margin-top: 20px;
+        }
+
+        .welcome-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .welcome-alert.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .welcome-content {
+            position: relative;
+            color: #fff;
+            text-align: center;
+        }
+
+        .welcome-content h3 {
+            color: #64ffda;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            font-family: "Moon Dance", cursive;
+        }
+
+        .welcome-content p {
+            font-family: "Dancing Script", cursive;
+            font-size: 1.2em;
+        }
+
+        .close-welcome {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64ffda;
+        }
+
+        .close-welcome:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+<body>
+    <div id="welcome-alert" class="welcome-alert">
+        <div class="welcome-content">
+            <h3>Welcome!</h3>
+            <p>Thanks for visiting my portfolio</p>
+            <button id="close-welcome" class="close-welcome">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="background-container">
+        <video autoplay muted loop playsinline>
+            <source src="assets/media/parrot.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <audio id="bgMusic" loop autoplay>
+        <source src="assets/media/nature.mp3" type="audio/mp3">
+    </audio>
+    
+    <audio id="birdSound" loop autoplay>
+        <source src="assets/media/bird.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="hover-area"></div>
+    <div class="audio-controls">
+        <button class="audio-button" id="toggleMusic" aria-label="Toggle background music">
+            <i class="fas fa-pause"></i>
+            <span>Pause</span>
+        </button>
+        <input type="range" class="volume-slider" id="musicVolume" 
+               min="0" max="1" step="0.1" value="0.2"
+               aria-label="Background music volume"
+               title="Background music volume">
+        <button class="audio-button" id="playBirdSound" aria-label="Toggle bird sound">
+            <i class="fas fa-pause"></i>
+            <span>Pause</span>
+        </button>
+        <input type="range" class="volume-slider" id="birdVolume" 
+               min="0" max="1" step="0.1" value="0.5"
+               aria-label="Bird sound effect volume"
+               title="Bird sound effect volume">
+    </div>
+
+    <div class="motivation-quote">
+        "Success is not final, failure is not fatal: it is the courage to continue that counts."
+    </div>
+
+    <div class="content page-section active" id="home">
+        <section class="hero">
+            <h2>Hi, my name is</h2>
+            <h1>Samiul Alim</h1>
+            <h2>I build things for the web.</h2>
+            <p>
+                I'm a software engineer specializing in building (and occasionally designing) 
+                exceptional digital experiences. Currently, I'm focused on building accessible, 
+                human-centered products.
+            </p>
+            <div class="cta-buttons">
+                <a href="#work" class="cta-button">View My Work</a>
+                <a href="https://www.facebook.com/md.samiul.25" target="_blank" rel="noopener" class="cta-button">Contact Me</a>
+                <a href="https://smhofficial.netlify.app/" target="_blank" rel="noopener" class="cta-button">Visit SMH Tech</a>
+            </div>
+        </section>
+    </div>
+
+    <section class="work-section page-section page-transition" id="work">
+        <h2 class="section-title">My Work</h2>
+        <div class="projects-container">
+            <div class="close-section" id="closeWork">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://image.freepik.com/free-vector/project-outline-colorful-icons_104589-96.jpg" alt="3D Snake Game">
+                    </div>
+                    <div class="project-content">
+                        <h3>3D Snake Game</h3>
+                        <p>A modern take on the classic Snake game built with Three.js. Features 3D graphics, dynamic lighting, and responsive controls.</p>
+                        <div class="project-tech-stack">
+                            <span>Three.js</span>
+                            <span>JavaScript</span>
+                            <span>WebGL</span>
+                            <span>HTML5</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://image.freepik.com/free-vector/project-outline-colorful-icons_104589-96.jpg" alt="Weather Dashboard">
+                    </div>
+                    <div class="project-content">
+                        <h3>Weather Dashboard</h3>
+                        <p>Real-time weather application with dynamic animations, 7-day forecast, and location-based weather updates using OpenWeather API.</p>
+                        <div class="project-tech-stack">
+                            <span>React</span>
+                            <span>Node.js</span>
+                            <span>OpenWeather API</span>
+                            <span>CSS3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://image.freepik.com/free-vector/project-outline-colorful-icons_104589-96.jpg" alt="Real-time Chat Application">
+                    </div>
+                    <div class="project-content">
+                        <h3>Real-time Chat App</h3>
+                        <p>Full-stack chat application with real-time messaging, user authentication, and file sharing capabilities.</p>
+                        <div class="project-tech-stack">
+                            <span>Socket.io</span>
+                            <span>Express</span>
+                            <span>MongoDB</span>
+                            <span>JWT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://image.freepik.com/free-vector/project-outline-colorful-icons_104589-96.jpg" alt="AI Image Generator">
+                    </div>
+                    <div class="project-content">
+                        <h3>AI Image Generator</h3>
+                        <p>Web application that generates unique images using AI. Integrated with DALL-E API for image generation with custom prompts.</p>
+                        <div class="project-tech-stack">
+                            <span>Vue.js</span>
+                            <span>OpenAI API</span>
+                            <span>Tailwind CSS</span>
+                            <span>Firebase</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://image.freepik.com/free-vector/project-outline-colorful-icons_104589-96.jpg" alt="Music Player">
+                    </div>
+                    <div class="project-content">
+                        <h3>Web Music Player</h3>
+                        <p>Modern music player with visualizations, playlist management, and cloud storage integration.</p>
+                        <div class="project-tech-stack">
+                            <span>Web Audio API</span>
+                            <span>React</span>
+                            <span>Redux</span>
+                            <span>AWS S3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://image.freepik.com/free-vector/project-outline-colorful-icons_104589-96.jpg" alt="Portfolio Website">
+                    </div>
+                    <div class="project-content">
+                        <h3>Portfolio Website</h3>
+                        <p>Personal portfolio website with custom animations, responsive design, and interactive elements.</p>
+                        <div class="project-tech-stack">
+                            <span>HTML5</span>
+                            <span>CSS3</span>
+                            <span>JavaScript</span>
+                            <span>Three.js</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="social-links">
+        <a href="https://discord.gg/H9RNtnfw" target="_blank" rel="noopener"><i class="fab fa-discord"></i></a>
+        <a href="https://www.facebook.com/md.samiul.25" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://www.instagram.com/mdsamiul5997/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+    </div>
+
+    <div class="email-link">
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=smhcodewave@gmail.com&su=Hello%20There" target="_blank" rel="noopener">
+            smhcodewave@gmail.com
+        </a>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
